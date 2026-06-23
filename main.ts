@@ -43,15 +43,21 @@ makerbit.onIrButton(IrButton.Down, IrButtonAction.Pressed, function () {
     Tinybit.CarCtrl(Tinybit.CarState.Car_Back)
 })
 makerbit.onIrButton(IrButton.Up, IrButtonAction.Pressed, function () {
-    if (Tinybit.Ultrasonic_CarV2() > 50) {
-        basic.showArrow(ArrowNames.North)
-        Tinybit.CarCtrl(Tinybit.CarState.Car_Run)
-    } else {
-        basic.showIcon(IconNames.Skull)
-    }
+    basic.showArrow(ArrowNames.North)
+    Tinybit.CarCtrl(Tinybit.CarState.Car_Run)
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        . . . . .
+        . . . . .
+        . . . . .
+        `)
 })
 input.onButtonPressed(Button.B, function () {
-	
+    music.play(music.stringPlayable("E B C5 A B G A F ", 120), music.PlaybackMode.UntilDone)
+    for (let index = 0; index < 4; index++) {
+        music._playDefaultBackground(music.builtInPlayableMelody(Melodies.Chase), music.PlaybackMode.InBackground)
+    }
 })
 makerbit.onIrButton(IrButton.Power, IrButtonAction.Pressed, function () {
     Tinybit.CarCtrl(Tinybit.CarState.Car_Stop)
@@ -69,12 +75,40 @@ makerbit.onIrButton(IrButton.NUM0, IrButtonAction.Pressed, function () {
     )
     basic.pause(2000)
 })
+makerbit.onIrButton(IrButton.Plus, IrButtonAction.Pressed, function () {
+    basic.showLeds(`
+        . # # . .
+        # . # . .
+        . . # . .
+        . . # . .
+        . # # # .
+        `)
+    basic.pause(1000)
+    basic.showLeds(`
+        . # # # .
+        # . . # .
+        . . # . .
+        . # . . .
+        # # # # .
+        `)
+    basic.pause(1000)
+    basic.showLeds(`
+        . # # # .
+        . . . # .
+        . # # # .
+        . . . # .
+        . # # # .
+        `)
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        . . . . .
+        . . . . .
+        . . . . .
+        `)
+    basic.pause(1000)
+})
 makerbit.connectIrReceiver(DigitalPin.P8)
-basic.forever(function () {
-    if (Tinybit.Ultrasonic_CarV2() < 50) {
-        Tinybit.CarCtrl(Tinybit.CarState.Car_Stop)
-        basic.showIcon(IconNames.Sad)
-        basic.pause(1000)
-        basic.clearScreen()
-    }
+loops.everyInterval(0, function () {
+	
 })
